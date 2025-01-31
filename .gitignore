@@ -1,0 +1,23 @@
+# Carpetas generadas
+build/
+dist/
+__pycache__/
+
+# Archivos generados
+*.spec
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Entornos virtuales
+venv/
+env/
+.env/
+
+# IDEs y editores
+.vscode/
+.idea/
+*.swp
+*.swo

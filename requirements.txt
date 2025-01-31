@@ -1,0 +1,2 @@
+pyperclip  # Librería para manejar el portapapeles del sistema
+pyinstaller==6.3.0
