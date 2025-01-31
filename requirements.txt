@@ -1,2 +1,2 @@
-pyperclip  # Librería para manejar el portapapeles del sistema
-pyinstaller==6.3.0
+pyperclip>=1.8.2  # Librería para manejar el portapapeles del sistema
+pyinstaller==6.3.0  # Para crear el ejecutable
