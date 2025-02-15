@@ -1,23 +1,77 @@
-# Carpetas generadas
+# Directorios de construcción y caché
 build/
 dist/
 __pycache__/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
 
-# Archivos generados
-*.spec
-*.pyc
-*.pyo
-*.pyd
-.Python
+# Archivos de Python
+*.py[cod]
+*$py.class
 *.so
+.Python
+
+# Archivos de distribución
+*.spec
+*.exe
+!dist/GeneradorContraseñas.exe
 
 # Entornos virtuales
 venv/
 env/
 .env/
+.venv/
+.python-version
 
 # IDEs y editores
 .vscode/
 .idea/
 *.swp
 *.swo
+.project
+.pydevproject
+.settings/
+*.sublime-workspace
+*.sublime-project
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs y caché
+*.log
+.cache/
+*.cache
+logs/
+debug.log
+
+# Archivos de configuración local
+config.local.yaml
+settings.local.json
+.env.local
+*.local.conf
+
+# Archivos temporales
+*.tmp
+*.bak
+*~
+.*.sw[po]
+
+# Archivos de prueba y cobertura
+.coverage
+coverage.xml
+nosetests.xml
+.pytest_cache/
+.hypothesis/
+
+# Documentación generada
+docs/_build/
+site/
+
+# Archivos de dependencias
+pip-log.txt
+pip-delete-this-directory.txt
