@@ -3,146 +3,89 @@ Script de construcción del ejecutable.
 Utiliza PyInstaller para generar un ejecutable optimizado con todas las dependencias.
 """
 
+import json
 import os
-import sys
-import logging
 import shutil
-from typing import List, Optional
+import sys
+from typing import Dict, Any
 import PyInstaller.__main__
 
-# Constantes de configuración
-EXECUTABLE_NAME = "GeneradorContraseñas"
-REQUIRED_FILES = [
-    "password_gui.py",
-    "password_generator.py",
-    "manager_theme.py",
-    "icon.ico"
-]
-BUILD_OPTIONS = [
-    f'--name={EXECUTABLE_NAME}',
-    '--onefile',           # Genera un único ejecutable
-    '--noconsole',        # Sin ventana de consola
-    '--clean',            # Limpia archivos temporales
-    '--noupx',            # No usar UPX
-    '--exclude-module=unittest',  # Excluye módulos de prueba
-    '--exclude-module=test',
-    '--exclude-module=distutils',
-    '--strip',            # Reduce tamaño
-    '--optimize=2',       # Optimización máxima
-    '--log-level=ERROR'   # Solo errores en log
-]
-
-def setup_logging() -> logging.Logger:
-    """
-    Configura y retorna un logger personalizado para el proceso de construcción.
-    
-    Returns:
-        logging.Logger: Logger configurado
-    """
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(levelname)s - %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S'
-    )
-    return logging.getLogger(__name__)
-
-def verify_required_files(current_dir: str, logger: logging.Logger) -> bool:
-    """
-    Verifica que todos los archivos necesarios existan.
-    
-    Args:
-        current_dir (str): Directorio actual del proyecto
-        logger (Logger): Logger configurado para mensajes
-        
-    Returns:
-        bool: True si todos los archivos existen, False en caso contrario
-    """
-    for file in REQUIRED_FILES:
-        file_path = os.path.join(current_dir, file)
-        if not os.path.exists(file_path):
-            logger.error(f"Archivo no encontrado: {file}")
-            return False
-    return True
-
-def clean_build_files(logger: logging.Logger):
-    """
-    Limpia los archivos temporales de construcción.
-    
-    Args:
-        logger (Logger): Logger configurado para mensajes
-    """
+def load_config() -> Dict[str, Any]:
+    """Carga la configuración desde build_config.json"""
     try:
-        if os.path.exists('build'):
-            shutil.rmtree('build')
-        spec_file = f'{EXECUTABLE_NAME}.spec'
-        if os.path.exists(spec_file):
-            os.remove(spec_file)
-        logger.info("Archivos temporales limpiados exitosamente")
-    except Exception as e:
-        logger.warning(f"Error al limpiar archivos temporales: {e}")
+        with open('build_config.json', 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        print("Error: No se encontró build_config.json")
+        sys.exit(1)
+    except json.JSONDecodeError:
+        print("Error: build_config.json está mal formateado")
+        sys.exit(1)
 
-def build_executable(logger: logging.Logger) -> bool:
-    """
-    Construye el ejecutable usando PyInstaller.
-    
-    Args:
-        logger (Logger): Logger configurado para mensajes
-        
-    Returns:
-        bool: True si la construcción fue exitosa, False en caso contrario
-    """
-    try:
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        icon_path = os.path.join(current_dir, "icon.ico")
-
-        if not verify_required_files(current_dir, logger):
-            return False
-
-        logger.info("Iniciando construcción del ejecutable...")
-
-        # Preparar opciones de construcción
-        build_command = [
-            'password_gui.py',
-            f'--icon={icon_path}',
-            *BUILD_OPTIONS,
-            '--add-data=password_generator.py;.',
-            '--add-data=manager_theme.py;.',
-            '--add-data=icon.ico;.'
+def clean_build_dirs(config: Dict[str, Any]) -> None:
+    """Limpia los directorios de construcción si está configurado"""
+    if config['build']['clean_build']:
+        dirs_to_clean = [
+            config['build']['output_dir'],
+            config['build']['temp_dir']
         ]
+        for dir_path in dirs_to_clean:
+            if os.path.exists(dir_path):
+                shutil.rmtree(dir_path)
+                print(f"Limpiando directorio: {dir_path}")
 
-        # Ejecutar PyInstaller (sin stdout y stderr)
-        PyInstaller.__main__.run(build_command)
-
-        # Verificar resultado
-        exe_path = os.path.join(current_dir, 'dist', f'{EXECUTABLE_NAME}.exe')
-        if os.path.exists(exe_path):
-            logger.info(f"Ejecutable creado exitosamente en: {exe_path}")
-            return True
-        
-        logger.error("No se pudo encontrar el ejecutable generado")
-        return False
-
-    except Exception as e:
-        logger.error(f"Error durante la construcción: {str(e)}")
-        return False
-
-def main():
-    """Función principal que coordina el proceso de construcción."""
-    logger = setup_logging()
+def build_executable(config: Dict[str, Any]) -> None:
+    """Construye el ejecutable usando PyInstaller"""
+    app_config = config['application']
+    build_config = config['build']
+    pyinstaller_config = config['pyinstaller']
     
-    try:
-        logger.info("=== Iniciando proceso de construcción ===")
-        
-        if build_executable(logger):
-            logger.info("=== Proceso completado exitosamente ===")
-            clean_build_files(logger)
-            return 0
-        
-        logger.error("=== El proceso falló ===")
-        return 1
+    # Prepara los argumentos para PyInstaller
+    args = [
+        pyinstaller_config['main_script'],
+        f"--name={app_config['name']}",
+        f"--icon={app_config['icon']}",
+        f"--distpath={build_config['output_dir']}",
+        f"--workpath={build_config['temp_dir']}",
+    ]
 
-    except KeyboardInterrupt:
-        logger.info("\nProceso interrumpido por el usuario")
+    # Agrega opciones condicionales
+    if build_config['one_file']:
+        args.append('--onefile')
+    if not build_config['console']:
+        args.append('--noconsole')
+    if build_config['debug']:
+        args.append('--debug')
+
+    # Agrega imports ocultos
+    for hidden_import in pyinstaller_config['hidden_imports']:
+        args.append(f'--hidden-import={hidden_import}')
+
+    # Agrega archivos adicionales
+    for file in pyinstaller_config['additional_files']:
+        args.append(f'--add-data={file}{os.pathsep}{os.path.dirname(file)}')
+
+    print("Iniciando construcción del ejecutable...")
+    PyInstaller.__main__.run(args)
+    print("Construcción completada exitosamente")
+
+def main() -> int:
+    """Función principal del script de construcción"""
+    try:
+        print("Cargando configuración de construcción...")
+        config = load_config()
+        
+        print("Preparando entorno de construcción...")
+        clean_build_dirs(config)
+        
+        print("Iniciando proceso de construcción...")
+        build_executable(config)
+        
+        print(f"Ejecutable creado exitosamente en: {config['build']['output_dir']}")
+        return 0
+        
+    except Exception as e:
+        print(f"Error durante la construcción: {str(e)}")
         return 1
 
 if __name__ == "__main__":

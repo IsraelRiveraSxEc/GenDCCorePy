@@ -1,10 +1,9 @@
-# Importamos los módulos necesarios
-import tkinter as tk  # Módulo principal para la interfaz gráfica
-from tkinter import ttk, messagebox  # Widgets modernos y cuadros de diálogo
-import pyperclip  # Para copiar texto al portapapeles
-from password_generator import PasswordGenerator, PasswordStrength  # Nuestra clase generadora de contraseñas
-import logging  # Para registro de eventos
-from manager_theme import ThemeManager  # Gestor de temas
+import tkinter as tk
+from tkinter import ttk, messagebox
+import pyperclip
+from password_generator import PasswordGenerator, PasswordStrength
+import logging
+from manager_theme import ThemeManager
 
 class PasswordGeneratorGUI:
     """Clase para la interfaz gráfica del generador de contraseñas"""
@@ -14,29 +13,23 @@ class PasswordGeneratorGUI:
         Inicializa la ventana principal y configura todos los componentes.
         Establece el tema inicial y crea la estructura base de la GUI.
         """
-        # Inicialización de componentes principales
         self.theme_manager = ThemeManager()
         
-        # Crear instancia del generador de contraseñas
         self.generator = PasswordGenerator()
         
-        # Configuración de la ventana principal
         self.window = tk.Tk()
-        self.window.title("Generador de Contraseñas")
-        self.window.geometry("800x800")
+        self.window.title("Generador de Contraseñas NEIR")
+        self.window.geometry("699x480")
         
-        # Variables de control
         self.use_lower = tk.BooleanVar(value=True)
         self.use_upper = tk.BooleanVar(value=True)
         self.use_digits = tk.BooleanVar(value=True)
         self.use_special = tk.BooleanVar(value=True)
         self.current_theme = tk.StringVar(value=self.theme_manager.get_default_theme())
         
-        # Configurar el tema inicial
         initial_theme = self.theme_manager.get_theme(self.current_theme.get())
         self.window.configure(bg=initial_theme["bg"])
         
-        # Configurar estilos y crear widgets
         self.setup_styles()
         self.create_widgets()
 
@@ -55,24 +48,20 @@ class PasswordGeneratorGUI:
                        foreground=theme["fg"],
                        font=(theme["font"], 24, 'bold'))
         style.configure('Futuristic.TButton', 
-                       background=theme["button_bg"], 
                        foreground=theme["fg"],
                        font=(theme["font"], 10, 'bold'))
         
     def create_widgets(self):
         """Crea todos los widgets de la interfaz"""
-        # Creación del marco principal
         self.main_frame = ttk.Frame(self.window, style='Futuristic.TFrame')
-        self.main_frame.pack(padx=40, pady=30, fill='both', expand=True)
+        self.main_frame.pack(padx=2, pady=2, fill='both', expand=True)
         
-        # Título
         ttk.Label(self.main_frame, 
-                 text="GENERADOR DE CONTRASEÑAS",
-                 style='Title.TLabel').pack(pady=20)
+                 text="GENERADOR DE CONTRASEÑAS NEIR",
+                 style='Title.TLabel').pack(pady=15)
         
-        # Selector de tema
         theme_frame = ttk.Frame(self.main_frame, style='Futuristic.TFrame')
-        theme_frame.pack(pady=10)
+        theme_frame.pack(pady=8)
         
         ttk.Label(theme_frame, 
                  text="Tema:",
@@ -87,22 +76,18 @@ class PasswordGeneratorGUI:
         )
         theme_menu.pack(side=tk.LEFT, padx=5)
         
-        # Opciones de caracteres
         self.create_character_options()
         
-        # Campos de entrada
         self.create_input_fields()
         
-        # Botón para generar contraseña
         self.generate_btn = ttk.Button(
             self.main_frame,
             text="GENERAR CONTRASEÑA",
             command=self.generate_password,
             style='Futuristic.TButton'
         )
-        self.generate_btn.pack(pady=30)
+        self.generate_btn.pack(pady=8)
         
-        # Campo para mostrar la contraseña generada
         self.password_var = tk.StringVar()
         self.password_entry = ttk.Entry(
             self.main_frame,
@@ -111,31 +96,28 @@ class PasswordGeneratorGUI:
             state='readonly',
             font=('Helvetica', 14)
         )
-        self.password_entry.pack(pady=20, fill='x', padx=40)
+        self.password_entry.pack(pady=8, fill='x', padx=8)
         
-        # Indicador de fortaleza
         self.strength_var = tk.StringVar()
         self.strength_label = ttk.Label(
             self.main_frame,
             textvariable=self.strength_var,
             style='Futuristic.TLabel'
         )
-        self.strength_label.pack(pady=10)
+        self.strength_label.pack(pady=8)
         
-        # Botón copiar
         self.copy_btn = ttk.Button(
             self.main_frame,
             text="COPIAR AL PORTAPAPELES",
             command=self.copy_to_clipboard,
             style='Futuristic.TButton'
         )
-        self.copy_btn.pack(pady=20)
+        self.copy_btn.pack(pady=5)
         
     def create_character_options(self):
         options_frame = ttk.Frame(self.main_frame, style='Futuristic.TFrame')
-        options_frame.pack(pady=10)
+        options_frame.pack(pady=2)
         
-        # Checkboxes para tipos de caracteres
         ttk.Checkbutton(options_frame, 
                        text="Minúsculas",
                        variable=self.use_lower).pack(side=tk.LEFT, padx=5)
@@ -150,7 +132,6 @@ class PasswordGeneratorGUI:
                        variable=self.use_special).pack(side=tk.LEFT, padx=5)
         
     def create_input_fields(self):
-        # Campo iteraciones
         ttk.Label(self.main_frame, 
                  text="Iteraciones (1000-50000):", 
                  style='Futuristic.TLabel').pack(pady=5)
@@ -158,7 +139,6 @@ class PasswordGeneratorGUI:
         self.iterations.pack(pady=5)
         self.iterations.insert(0, "1000")
         
-        # Campo longitud
         ttk.Label(self.main_frame, 
                  text="Longitud (8-129):", 
                  style='Futuristic.TLabel').pack(pady=5)
@@ -179,7 +159,6 @@ class PasswordGeneratorGUI:
                 self.use_special.get()
             ])
             
-            # Validación por rangos de longitud
             if length < 8:
                 messagebox.showerror(
                     "Error - Longitud Insuficiente",
@@ -193,7 +172,6 @@ class PasswordGeneratorGUI:
                 )
                 return
                 
-            # Validación específica por rango
             if length <= 8:
                 if selected_options < 3:
                     messagebox.showwarning(
@@ -266,7 +244,6 @@ class PasswordGeneratorGUI:
                     )
                     return
 
-            # Validación de iteraciones
             if not (1000 <= iterations <= 50000):
                 messagebox.showerror(
                     "Error - Iteraciones Inválidas",
@@ -280,7 +257,6 @@ class PasswordGeneratorGUI:
                 )
                 return
 
-            # Generar contraseña
             password, strength = self.generator.generate_password(
                 length, iterations,
                 self.use_lower.get(),
@@ -294,7 +270,7 @@ class PasswordGeneratorGUI:
                 self.strength_var.set(f"Fortaleza: {strength.value}")
                 color = {
                     PasswordStrength.WEAK: "#ff0000",
-                    PasswordStrength.MEDIUM: "#ffff00",
+                    PasswordStrength.MEDIUM: "#ffa500",
                     PasswordStrength.STRONG: "#00ff00",
                     PasswordStrength.VERY_STRONG: "#00ffff"
                 }[strength]
@@ -336,11 +312,15 @@ class PasswordGeneratorGUI:
         """Copia la contraseña generada al portapapeles"""
         password = self.password_var.get()
         if password:
-            # Si hay una contraseña generada, la copia al portapapeles
             pyperclip.copy(password)
             messagebox.showinfo(
-                "Éxito",
-                "Contraseña copiada al portapapeles"
+            "Éxito",
+            "Contraseña copiada al portapapeles"
+            )
+        else:
+            messagebox.showwarning(
+            "Advertencia",
+            "No hay nada que copiar. Primero genera una contraseña."
             )
             
     def run(self):
@@ -353,16 +333,11 @@ class PasswordGeneratorGUI:
         self.window.configure(bg=theme["bg"])
         self.setup_styles()
         
-        # Actualizar el color de fondo del marco principal
         self.main_frame.configure(style='Futuristic.TFrame')
         
-        # Actualizar el color del indicador de fortaleza si hay una contraseña
         if self.strength_var.get():
             strength_text = self.strength_var.get()
-            color = self.theme_manager.get_strength_color(strength_text, self.current_theme.get())
-            self.strength_label.configure(foreground=color)
 
-# Punto de entrada del programa
 if __name__ == "__main__":
     app = PasswordGeneratorGUI()  # Crea la instancia de la aplicación
     app.run()  # Inicia la aplicación

@@ -1,0 +1,48 @@
+{
+    "application": {
+        "name": "Generador de Contraseñas NEIR",
+        "version": "1.2.0",
+        "author": "Nelson Espinosa",
+        "description": "Generador de contraseñas seguras con interfaz gráfica",
+        "icon": "assets/icon.ico"
+    },
+    "build": {
+        "output_dir": "dist",
+        "temp_dir": "build",
+        "one_file": true,
+        "clean_build": true,
+        "console": false,
+        "debug": false,
+        "required_files": [
+            "password_generator.py",
+            "password_gui.py",
+            "manager_theme.py"
+        ]
+    },
+    "pyinstaller": {
+        "main_script": "password_gui.py",
+        "hidden_imports": [
+            "tkinter",
+            "pyperclip"
+        ],
+        "exclude_modules": [
+            "test",
+            "unittest"
+        ],
+        "additional_files": [
+            "assets/*"
+        ]
+    },
+    "resources": {
+        "include_files": [
+            "assets/*",
+            "LICENSE",
+            "README.md"
+        ],
+        "exclude_patterns": [
+            "*.pyc",
+            "__pycache__",
+            "*.spec"
+        ]
+    }
+}

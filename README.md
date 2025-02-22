@@ -1,108 +1,118 @@
-# Generador de Contraseñas
+# Generador de Contraseñas NEIR
 
-Una aplicación de escritorio segura y optimizada para generar contraseñas aleatorias.
+Una aplicación de escritorio segura y optimizada para generar contraseñas aleatorias con interfaz gráfica moderna y personalizable.
 
 ## Estado del Proyecto
 
-🚀 **Versión actual:** 1.1.0
-📅 **Última actualización:** [15/2/2025]
+🚀 **Versión actual:** 1.2.0
+📅 **Última actualización:** [21/2/2025]
+🔒 **Estado:** Estable
 
 ### Características Implementadas
 
 - ✅ Generador de contraseñas seguras con validación multinivel
 - ✅ Interfaz gráfica moderna con Tkinter
-- ✅ Sistema de temas visuales (5 temas personalizables)
-- ✅ Ejecutable optimizado con PyInstaller
-- ✅ Validación de seguridad de contraseñas (4 niveles)
-- ✅ Copiado al portapapeles con retroalimentación
-- ✅ Sistema de logging detallado
-- ✅ Manejo de errores robusto
-
-### Próximas Características
-
-- 🔄 Sistema de pruebas automatizadas (unittest/pytest)
-- 💾 Persistencia de configuraciones (JSON/SQLite)
-- 🌍 Soporte multiidioma (i18n)
-- 🎨 Más temas visuales
-- ♿ Modo de alto contraste para accesibilidad
+- ✅ Sistema de temas visuales personalizables
+  - 10 temas predefinidos optimizados
+  - Combinaciones de colores mejoradas para mejor legibilidad
+- ✅ Validación de seguridad en tiempo real
+  - Análisis de fortaleza de contraseñas
+  - Retroalimentación visual inmediata
+- ✅ Optimizaciones de rendimiento
+  - Tamaño de ventana optimizado (699x480)
+  - Mejor gestión de recursos
+- ✅ Características de seguridad
+  - Uso de `secrets` para generación criptográficamente segura
+  - Validación multinivel de parámetros
+  - Mensajes de error detallados
+- ✅ Funcionalidades adicionales
+  - Copiado al portapapeles con confirmación
+  - Sistema de logging para diagnóstico
+  - Manejo robusto de errores
 
 ## Requisitos Técnicos
 
+### Requisitos Mínimos
 - Python 3.13+
 - 100MB espacio en disco
 - 2GB RAM
 - Windows 10/11
 
+### Dependencias Principales
+- tkinter (incluido en Python)
+- pyperclip
+- typing
+- secrets
+- logging
+
 ## Instalación
 
-### Opción 1: Ejecutable (Windows)
-1. Descarga `GeneradorContraseñas.exe` desde releases
-2. Ejecuta directamente - No requiere instalación
+Ejecutable (Windows)
+1. Descarga la última versión desde la sección de releases
+2. Ejecuta el archivo `.exe` descargado
+3. No requiere instalación adicional
 
-### Opción 2: Desde código fuente
-```bash
-git clone https://github.com/IsraelRiveraSxEc/GenDCCorePy.git
-cd GenDCCorePy
-python -m venv venv
-source venv/bin/activate  # En Windows: venv\Scripts\activate
-pip install -r requirements.txt
-python password_gui.py
+# Instalación 2 
+
+1. Clona el repositorio: `git clone https://github.com/IsraelRiveraSxEc/GenDCCorePy.git`
+2. Navega al directorio: `cd GenDCCorePy`
+3. Instala las dependencias: `pip install -r requirements.txt`
+4. Ejecuta la aplicación: `python build_exe.py`
+
+## Uso
+
+1. Selecciona los tipos de caracteres deseados:
+   - Minúsculas (a-z)
+   - Mayúsculas (A-Z)
+   - Números (0-9)
+   - Caracteres especiales (!@#$%^&*)
+
+2. Configura los parámetros:
+   - Longitud (8-129 caracteres)
+   - Iteraciones (1000-50000)
+
+3. Selecciona un tema visual: (opcional)
+   - Cyberpunk
+   - Midnight
+   - Matrix
+   - Sunset
+   - Light
+   - Ocean
+   - Yellow
+   - Aurora
+   - Fire
+   - Purgan
+
+4. Genera y copia tu contraseña segura
+
+# Desarrollo
+
+### Estructura del Proyecto
 ```
-
-## Estructura del Proyecto
-
-```
-GenDCCorePy/
-├── password_gui.py       # Interfaz gráfica principal
+generador-contraseñas/
+├── password_gui.py      # Interfaz gráfica principal
 ├── password_generator.py # Lógica de generación
-├── manager_theme.py      # Gestor de temas
-├── build_exe.py         # Script de compilación
-├── icon.ico             # Icono de la aplicación
-├── requirements.txt     # Dependencias
+├── manager_theme.py     # Gestión de temas
+├── build_config.json    # Configuración de construcción
+├── build_exe.py        # Script de construcción
+├── requirements.txt     # Dependencias de producción
 └── README.md           # Documentación
 ```
 
-## Desarrollo
+## Contribución
 
-### Configuración del entorno
-```bash
-# Instalar dependencias de desarrollo
-pip install -r requirements-dev.txt
-
-# Ejecutar pruebas
-python -m pytest
-
-# Generar ejecutable
-python build_exe.py
-```
-
-### Convenciones de código
-- PEP 8 para estilo de código
-- Docstrings en formato Google
-- Type hints para todas las funciones
-- Comentarios en español
-
-## Seguridad
-
-- Uso de `secrets` para generación aleatoria
-- Validación de entrada robusta
-- Manejo seguro del portapapeles
-- Logging de eventos críticos
-
-## Contribuir
-
-1. Fork el repositorio
-2. Crea una rama (`git checkout -b feature/NuevaCaracteristica`)
-3. Commit (`git commit -m 'Add: nueva característica'`)
-4. Push (`git push origin feature/NuevaCaracteristica`)
+1. Fork el proyecto
+2. Crea una rama para tu característica (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
 5. Abre un Pull Request
 
 ## Licencia
 
-MIT License - Ver `LICENSE` para detalles
+Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
 
 ## Contacto
 
-Israel Rivera - [@IsraelRiveraSxEc](https://github.com/IsraelRiveraSxEc)
+Nelson Espinosa Ec: 0961705423
 
 Link del proyecto: [https://github.com/IsraelRiveraSxEc/GenDCCorePy](https://github.com/IsraelRiveraSxEc/GenDCCorePy)
