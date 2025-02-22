@@ -13,18 +13,22 @@ htmlcov/
 *$py.class
 *.so
 .Python
+*.pyc
+__pycache__/
+.env
+.venv
+env/
+venv/
+ENV/
+.python-version
 
 # Archivos de distribución
 *.spec
 *.exe
 !dist/GeneradorContraseñas.exe
-
-# Entornos virtuales
-venv/
-env/
-.env/
-.venv/
-.python-version
+*.msi
+*.dmg
+*.pkg
 
 # IDEs y editores
 .vscode/
@@ -36,11 +40,15 @@ env/
 .settings/
 *.sublime-workspace
 *.sublime-project
+.vs/
+*.code-workspace
 
 # Archivos de sistema
 .DS_Store
 Thumbs.db
 desktop.ini
+*.db
+*.sqlite3
 
 # Logs y caché
 *.log
@@ -48,18 +56,24 @@ desktop.ini
 *.cache
 logs/
 debug.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # Archivos de configuración local
 config.local.yaml
 settings.local.json
 .env.local
 *.local.conf
+.env.*
 
 # Archivos temporales
 *.tmp
 *.bak
 *~
 .*.sw[po]
+*.temp
+temp/
 
 # Archivos de prueba y cobertura
 .coverage
@@ -67,11 +81,31 @@ coverage.xml
 nosetests.xml
 .pytest_cache/
 .hypothesis/
+htmlcov/
+.tox/
+junit.xml
 
 # Documentación generada
 docs/_build/
 site/
+_site/
+.docz/
+.sphinx-build/
 
 # Archivos de dependencias
 pip-log.txt
 pip-delete-this-directory.txt
+requirements.local.txt
+
+# Archivos de compilación
+*.pyd
+*.dll
+*.so
+*.dylib
+*.o
+*.obj
+
+# Archivos específicos del proyecto
+assets/temp/*
+custom_themes.json
+user_settings.json
