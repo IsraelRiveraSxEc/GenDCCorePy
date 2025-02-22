@@ -1,3 +1,12 @@
+"""
+Módulo principal para la generación de contraseñas seguras.
+Implementa la lógica de generación y validación de contraseñas
+utilizando el módulo secrets para garantizar la seguridad criptográfica.
+
+Autor: Nelson Espinosa
+Versión: 1.2.0
+"""
+
 import secrets
 import string
 import logging
@@ -5,6 +14,7 @@ from enum import Enum
 from typing import Tuple, Optional
 
 class PasswordStrength(Enum):
+    """Enumeración para los niveles de fortaleza de contraseña"""
     WEAK = "Débil"
     MEDIUM = "Media"
     STRONG = "Fuerte"
@@ -16,9 +26,27 @@ logging.basicConfig(
 )
 
 class PasswordGenerator:
-    """Clase principal para la generación y evaluación de contraseñas seguras"""
+    """
+    Clase principal para la generación y evaluación de contraseñas seguras.
+    
+    Implementa métodos para:
+    - Generación de contraseñas criptográficamente seguras
+    - Validación de parámetros de entrada
+    - Evaluación de fortaleza de contraseñas
+    - Logging de operaciones
+    
+    Atributos:
+        lowercase (str): Caracteres en minúscula disponibles
+        uppercase (str): Caracteres en mayúscula disponibles
+        digits (str): Dígitos disponibles
+        special (str): Caracteres especiales disponibles
+    """
     
     def __init__(self):
+        """
+        Inicializa el generador con los conjuntos de caracteres predefinidos
+        y configura el sistema de logging.
+        """
         self.lowercase = string.ascii_lowercase  # a-z
         self.uppercase = string.ascii_uppercase  # A-Z
         self.digits = string.digits             # 0-9
@@ -27,6 +55,10 @@ class PasswordGenerator:
         self._setup_logging()
     
     def _setup_logging(self) -> None:
+        """
+        Configura el sistema de logging con formato detallado.
+        Incluye timestamp, nivel, archivo y número de línea.
+        """
         logging.basicConfig(
             level=logging.INFO,
             format='%(asctime)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s',
@@ -34,6 +66,16 @@ class PasswordGenerator:
         )
     
     def validate_params(self, length: int, iterations: int) -> bool:
+        """
+        Valida los parámetros de entrada para la generación de contraseñas.
+        
+        Args:
+            length (int): Longitud deseada de la contraseña (8-129)
+            iterations (int): Número de iteraciones máximo (1000-50000)
+            
+        Returns:
+            bool: True si los parámetros son válidos, False en caso contrario
+        """
         try:
             return 8 <= length <= 129 and 1000 <= iterations <= 50000
         except (ValueError, TypeError):
@@ -46,15 +88,18 @@ class PasswordGenerator:
         Genera una contraseña segura con los parámetros especificados.
         
         Args:
-            length: Longitud deseada de la contraseña
-            iterations: Número máximo de intentos de generación
-            use_lower: Incluir minúsculas
-            use_upper: Incluir mayúsculas
-            use_digits: Incluir números
-            use_special: Incluir caracteres especiales
+            length (int): Longitud deseada de la contraseña
+            iterations (int): Número máximo de intentos de generación
+            use_lower (bool): Incluir minúsculas
+            use_upper (bool): Incluir mayúsculas
+            use_digits (bool): Incluir números
+            use_special (bool): Incluir caracteres especiales
             
         Returns:
-            Tuple[str, PasswordStrength]: Contraseña generada y su nivel de fortaleza
+            tuple[str, PasswordStrength]: Contraseña generada y su nivel de fortaleza
+            
+        Raises:
+            ValueError: Si los parámetros no son válidos
         """
         if not self.validate_params(length, iterations):
             logging.error(f"Parámetros inválidos: longitud={length}, iteraciones={iterations}")
@@ -97,7 +142,20 @@ class PasswordGenerator:
         return "", PasswordStrength.WEAK
         
     def _evaluate_password_strength(self, password: str) -> PasswordStrength:
-        """Evalúa la fortaleza de la contraseña"""
+        """
+        Evalúa la fortaleza de una contraseña basándose en múltiples criterios.
+        
+        Criterios:
+        - Longitud de la contraseña
+        - Variedad de caracteres
+        - Complejidad de la combinación
+        
+        Args:
+            password (str): Contraseña a evaluar
+            
+        Returns:
+            PasswordStrength: Nivel de fortaleza de la contraseña
+        """
         score = 0
         length = len(password)
         

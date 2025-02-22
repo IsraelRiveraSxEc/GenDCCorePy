@@ -1,3 +1,11 @@
+"""
+Módulo de interfaz gráfica para el generador de contraseñas.
+Implementa una GUI responsiva usando tkinter.
+
+Autor: Nelson Espinosa
+Versión: 1.2.0
+"""
+
 import tkinter as tk
 from tkinter import ttk, messagebox
 import pyperclip
@@ -6,7 +14,21 @@ import logging
 from manager_theme import ThemeManager
 
 class PasswordGeneratorGUI:
-    """Clase para la interfaz gráfica del generador de contraseñas"""
+    """
+    Clase principal para la interfaz gráfica del generador de contraseñas.
+    
+    Implementa:
+    - Interfaz gráfica responsiva con Tkinter
+    - Sistema de temas visuales
+    - Validación en tiempo real
+    - Copiado al portapapeles
+    - Manejo de errores visual
+    
+    Atributos:
+        window (tk.Tk): Ventana principal de la aplicación
+        theme_manager (ThemeManager): Gestor de temas visuales
+        generator (PasswordGenerator): Generador de contraseñas
+    """
     
     def __init__(self):
         """
@@ -14,13 +36,14 @@ class PasswordGeneratorGUI:
         Establece el tema inicial y crea la estructura base de la GUI.
         """
         self.theme_manager = ThemeManager()
-        
         self.generator = PasswordGenerator()
         
+        # Configuración de la ventana principal
         self.window = tk.Tk()
         self.window.title("Generador de Contraseñas NEIR")
         self.window.geometry("699x480")
         
+        # Variables de control
         self.use_lower = tk.BooleanVar(value=True)
         self.use_upper = tk.BooleanVar(value=True)
         self.use_digits = tk.BooleanVar(value=True)
@@ -147,7 +170,10 @@ class PasswordGeneratorGUI:
         self.length.insert(0, "16")
         
     def generate_password(self):
-        """Maneja el evento de generación de contraseña"""
+        """
+        Maneja el proceso de generación de contraseña.
+        Incluye validación, generación y actualización de UI.
+        """
         try:
             iterations = int(self.iterations.get())
             length = int(self.length.get())
@@ -309,7 +335,10 @@ class PasswordGeneratorGUI:
             )
             
     def copy_to_clipboard(self):
-        """Copia la contraseña generada al portapapeles"""
+        """
+        Copia la contraseña generada al portapapeles.
+        Muestra confirmación visual al usuario.
+        """
         password = self.password_var.get()
         if password:
             pyperclip.copy(password)

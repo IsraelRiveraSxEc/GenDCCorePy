@@ -1,3 +1,11 @@
+"""
+Módulo de gestión de temas visuales para la aplicación.
+Implementa un sistema de temas personalizables con 10 diseños predefinidos.
+
+Autor: Nelson Espinosa
+Versión: 1.2.0
+"""
+
 from typing import Dict, Any, List
 from enum import Enum
 
@@ -12,7 +20,7 @@ class ThemeNames(Enum):
     SUNSET = "Sunset"
     LIGHT = "Light"
     OCEAN = "Ocean"
-    Yellow = "Yellow"
+    YELLOW = "Yellow"
     AURORA = "Aurora"
     FIRE = "Fire"
     PURGAN = "Purgan"
@@ -20,15 +28,27 @@ class ThemeNames(Enum):
 class ThemeManager:
     """
     Gestor de temas para la interfaz gráfica.
-    Maneja la configuración visual y cambios de tema en tiempo real.
+    
+    Implementa:
+    - Gestión de temas visuales
+    - Cambios de tema en tiempo real
+    - Configuraciones de color y estilo
+    - Validación de temas
+    
+    Atributos:
+        themes (Dict[str, Dict[str, Any]]): Diccionario de configuraciones de temas
+        current_theme (str): Nombre del tema actual
     """
     
     def __init__(self):
-        """Inicializa el gestor de temas con las configuraciones predefinidas"""
+        """
+        Inicializa el gestor de temas con las configuraciones predefinidas.
+        Establece el tema por defecto y carga las configuraciones.
+        """
         self.themes: Dict[str, Dict[str, Any]] = {
             ThemeNames.CYBERPUNK.value: {
                 "bg": "#0A1929",
-                "fg": "#3C8F40",
+                "fg": "#00FF41",
                 "accent": "#FFD700",
                 "font": "Comic Sans MS",
             },
@@ -62,7 +82,7 @@ class ThemeManager:
                 "accent": "#268bd2",
                 "font": "Merriweather",
             },
-            ThemeNames.Yellow.value: {
+            ThemeNames.YELLOW.value: {
                 "bg": "#e7e23a",
                 "fg": "#4D3D00",
                 "accent": "#ff6666",
@@ -92,13 +112,16 @@ class ThemeManager:
 
     def get_theme(self, theme_name: str) -> Dict[str, Any]:
         """
-        Obtiene la configuración de un tema específico
+        Obtiene la configuración de un tema específico.
         
         Args:
-            theme_name: Nombre del tema a obtener
+            theme_name (str): Nombre del tema a obtener
             
         Returns:
-            Diccionario con la configuración del tema
+            Dict[str, Any]: Configuración completa del tema
+            
+        Raises:
+            ValueError: Si el tema no existe
         """
         return self.themes.get(theme_name, self.themes[self.default_theme])
 

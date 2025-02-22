@@ -1,118 +1,119 @@
 # Generador de Contraseñas NEIR
 
-Una aplicación de escritorio segura y optimizada para generar contraseñas aleatorias con interfaz gráfica moderna y personalizable.
+Una aplicación de escritorio segura y optimizada para generar contraseñas aleatorias con interfaz gráfica.
 
 ## Estado del Proyecto
 
 🚀 **Versión actual:** 1.2.0
-📅 **Última actualización:** [21/2/2025]
+📅 **Última actualización:** [22/2/2025]
 🔒 **Estado:** Estable
 
-### Características Implementadas
+### Características Principales
 
-- ✅ Generador de contraseñas seguras con validación multinivel
-- ✅ Interfaz gráfica moderna con Tkinter
-- ✅ Sistema de temas visuales personalizables
-  - 10 temas predefinidos optimizados
-  - Combinaciones de colores mejoradas para mejor legibilidad
-- ✅ Validación de seguridad en tiempo real
-  - Análisis de fortaleza de contraseñas
+- ✅ **Generación Segura**
+  - Uso del módulo `secrets` para aleatoriedad criptográfica
+  - Validación multinivel de parámetros (8-129 caracteres)
+  - Sistema de puntuación de fortaleza en tiempo real
+  - Rango de iteraciones configurable (1000-50000)
+
+- ✅ **Interfaz Responsiva**
+  - Diseño responsivo optimizado (699x480)
+  - 10 temas visuales predefinidos
   - Retroalimentación visual inmediata
-- ✅ Optimizaciones de rendimiento
-  - Tamaño de ventana optimizado (699x480)
-  - Mejor gestión de recursos
-- ✅ Características de seguridad
-  - Uso de `secrets` para generación criptográficamente segura
-  - Validación multinivel de parámetros
-  - Mensajes de error detallados
-- ✅ Funcionalidades adicionales
-  - Copiado al portapapeles con confirmación
-  - Sistema de logging para diagnóstico
+  - Indicadores de fortaleza con código de colores
+
+- ✅ **Características Avanzadas**
+  - Sistema de logging detallado
   - Manejo robusto de errores
+  - Copiado seguro al portapapeles
+  - Validación en tiempo real
+
+### Temas Visuales Disponibles
+
+1. 🌐 Cyberpunk
+2. 🌙 Midnight
+3. 🖥️ Matrix
+4. 🌅 Sunset
+5. ☀️ Light
+6. 🌊 Ocean
+7. 💛 Yellow
+8. 🌈 Aurora
+9. 🔥 Fire
+10. 🎮 Purgan
 
 ## Requisitos Técnicos
 
-### Requisitos Mínimos
+### Sistema
 - Python 3.13+
 - 100MB espacio en disco
 - 2GB RAM
 - Windows 10/11
 
-### Dependencias Principales
-- tkinter (incluido en Python)
-- pyperclip
-- typing
-- secrets
-- logging
+### Dependencias
+```python
+pyperclip>=1.8.2    # Gestión del portapapeles
+pyinstaller>=6.11.0 # Construcción del ejecutable
+```
 
-## Instalación
+## Estructura del Proyecto
 
-Ejecutable (Windows)
-1. Descarga la última versión desde la sección de releases
-2. Ejecuta el archivo `.exe` descargado
-3. No requiere instalación adicional
-
-# Instalación 2 
-
-1. Clona el repositorio: `git clone https://github.com/IsraelRiveraSxEc/GenDCCorePy.git`
-2. Navega al directorio: `cd GenDCCorePy`
-3. Instala las dependencias: `pip install -r requirements.txt`
-4. Ejecuta la aplicación: `python build_exe.py`
-
-## Uso
-
-1. Selecciona los tipos de caracteres deseados:
-   - Minúsculas (a-z)
-   - Mayúsculas (A-Z)
-   - Números (0-9)
-   - Caracteres especiales (!@#$%^&*)
-
-2. Configura los parámetros:
-   - Longitud (8-129 caracteres)
-   - Iteraciones (1000-50000)
-
-3. Selecciona un tema visual: (opcional)
-   - Cyberpunk
-   - Midnight
-   - Matrix
-   - Sunset
-   - Light
-   - Ocean
-   - Yellow
-   - Aurora
-   - Fire
-   - Purgan
-
-4. Genera y copia tu contraseña segura
-
-# Desarrollo
-
-### Estructura del Proyecto
 ```
 generador-contraseñas/
-├── password_gui.py      # Interfaz gráfica principal
-├── password_generator.py # Lógica de generación
+├── password_generator.py # Core de generación
+├── password_gui.py      # Interfaz gráfica
 ├── manager_theme.py     # Gestión de temas
 ├── build_config.json    # Configuración de construcción
 ├── build_exe.py        # Script de construcción
-├── requirements.txt     # Dependencias de producción
-└── README.md           # Documentación
+├── requirements.txt    # Dependencias
+└── README.md          # Documentación
 ```
 
-## Contribución
+## Instalación
 
-1. Fork el proyecto
-2. Crea una rama para tu característica (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+### Método 1: Ejecutable (Windows)
+1. Descarga el último release
+2. Ejecuta el archivo `.exe`
+3. No requiere instalación adicional
+
+### Método 2: Desde Código Fuente
+```bash
+git clone https://github.com/IsraelRiveraSxEc/GenDCCorePy.git
+cd GenDCCorePy
+pip install -r requirements.txt
+python build_exe.py
+```
+
+## Uso
+
+1. **Configuración de Contraseña**
+   - Selecciona tipos de caracteres (a-z, A-Z, 0-9, !@#$%^&*)
+   - Ajusta longitud (8-129)
+   - Define iteraciones (1000-50000)
+
+2. **Personalización Visual**
+   - Elige entre 10 temas predefinidos
+   - Interfaz adaptativa
+   - Indicadores de fortaleza dinámicos
+
+3. **Generación y Copiado**
+   - Genera contraseña segura
+   - Copia al portapapeles
+   - Validación visual inmediata
+
+## Desarrollo y Contribución
+
+### Flujo de Trabajo
+1. Fork del repositorio
+2. Crear rama (`git checkout -b feature/NuevaCaracteristica`)
+3. Commit (`git commit -m 'Añade nueva característica'`)
+4. Push (`git push origin feature/NuevaCaracteristica`)
+5. Pull Request
 
 ## Licencia
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+MIT License - Ver `LICENSE` para detalles
 
 ## Contacto
 
 Nelson Espinosa Ec: 0961705423
-
-Link del proyecto: [https://github.com/IsraelRiveraSxEc/GenDCCorePy](https://github.com/IsraelRiveraSxEc/GenDCCorePy)
+[Repositorio del Proyecto](https://github.com/IsraelRiveraSxEc/GenDCCorePy)
